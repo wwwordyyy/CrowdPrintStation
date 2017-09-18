@@ -1,0 +1,51 @@
+extends layout
+
+block content
+	script.
+		$(document).ready(function(){
+			document.getElementById("printerAttributes").style.display="none"
+			$("#installprinter").click(function(){
+				$.ajax({
+					url:"installprinter/nextstep",
+					type:"POST",
+					data:{printerInfo:JSON.stringify({
+						printerName:document.getElementById("printerName").value,
+						printerUri:document.getElementById("printerUri").innerText,
+						printerMakeAndModel:document.getElementById("printerMakeAndModel").innerText,
+						ppdFilePath:document.getElementById("ppdFilePath").innerText,
+						printerDesc:document.getElementById("printerDesc").value,
+						printerLoc:document.getElementById("printerLoc").value
+					})},
+					dataType:"json",
+					success:function (msg){
+						alert(msg)
+					}
+				})	
+			})
+		})
+	div
+		div
+			| Printer Name: 
+			input(type="text" name="printerName" id="printerName")
+		div
+			| Printer Model: 
+			Span#printerMakeAndModel= printerInfo['device-make-and-model']
+		div
+			| PPD File: 
+			Span#ppdFilePath= ppdPath
+
+		div
+			| Printer Description: 
+			input(type="text" name="printerDesc" id="printerDesc")
+		div
+			| Printer Location: 
+			input(type="text" name="printerLoc" id="printerLoc")
+		button#installprinter
+			| Install Printer
+		div#printerAttributes
+			Span#printerModelName= printerInfo['device-info']
+			Span#printerUri=printerInfo['device-uri']
+
+
+
+	

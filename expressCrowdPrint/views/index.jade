@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	script(src="javascripts/indexscript.js")
+		
+		
+	
+	button#findprinters
+		| Find Printers
+	br
+	
+	form(action="installprinter" method="POST")
+		select(id="listofprinternames" name="printer")
+			option
+				| Printers
+		button#installprinter
+			| Install Printer
+	input(type="text" id="jobKey")
+	button#startprinting
+		| Print
+
+	div.printerStatusBox
